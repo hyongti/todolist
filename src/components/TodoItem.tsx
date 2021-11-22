@@ -58,14 +58,14 @@ const Text = styled.div<{ done: boolean }>`
 `;
 
 interface TodoItemProps {
-  id?: string;
+  id: number;
   done: boolean;
   text: string;
 }
 
 function TodoItem({ id, done, text }: TodoItemProps) {
   return (
-    <TodoItemBlock>
+    <TodoItemBlock key={id}>
       <CheckCircle done={done}>{done && <MdDone />}</CheckCircle>
       <Text done={done}>{text}</Text>
       <Remove>
