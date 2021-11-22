@@ -1,4 +1,5 @@
 import React, { useReducer } from "react";
+import { createContext } from "vm";
 
 interface todoType {
   id: number;
@@ -53,7 +54,16 @@ interface TodoProviderProps {
   children: JSX.Element;
 }
 
+const TodoStateContext = createContext();
+const TodoDispatchContext = createContext();
+
 export function TodoProvider({ children }: TodoProviderProps) {
   const [state, dispatch] = useReducer(todoReducer, initialTodos);
-  return children;
+  return (
+    <TodoStateContext.Provider value={state}>
+      <TodoDispatchContext.Provider value={dispatch}>
+        {children}
+      </TodoDispatchContext.Provider>
+    </TodoStateContext.Provider>
+  );
 }
