@@ -56,7 +56,7 @@ function todoReducer(state: todoType[], action: any) {
 }
 
 interface TodoProviderProps {
-  children: JSX.Element;
+  children: JSX.Element[];
 }
 
 const TodoStateContext = createContext<todoType[] | null>(null);
