@@ -1,6 +1,7 @@
 import React, {
   createContext,
   MutableRefObject,
+  ReactNode,
   useContext,
   useReducer,
   useRef
@@ -55,13 +56,13 @@ function todoReducer(state: todoType[], action: any) {
   }
 }
 
-interface TodoProviderProps {
-  children: JSX.Element[];
-}
-
 const TodoStateContext = createContext<todoType[] | null>(null);
 const TodoDispatchContext = createContext<React.Dispatch<any> | null>(null);
 const TodoNextIdContext = createContext<MutableRefObject<number> | null>(null);
+
+interface TodoProviderProps {
+  children: ReactNode;
+}
 
 export function TodoProvider({ children }: TodoProviderProps) {
   const [state, dispatch] = useReducer(todoReducer, initialTodos);

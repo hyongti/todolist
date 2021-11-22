@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import styled from "styled-components";
 
 const TodoTemplateBlock = styled.div`
@@ -19,7 +19,7 @@ const TodoTemplateBlock = styled.div`
 `;
 
 interface TodoTemplateProps {
-  children: JSX.Element[];
+  children: ReactNode;
 }
 
 function TodoTemplate({ children }: TodoTemplateProps) {
