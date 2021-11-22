@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useReducer } from "react";
+import React, {
+  createContext,
+  MutableRefObject,
+  useContext,
+  useReducer,
+  useRef
+} from "react";
 
 interface todoType {
   id: number;
@@ -55,22 +61,45 @@ interface TodoProviderProps {
 
 const TodoStateContext = createContext<todoType[] | null>(null);
 const TodoDispatchContext = createContext<React.Dispatch<any> | null>(null);
+const TodoNextIdContext = createContext<MutableRefObject<number> | null>(null);
 
 export function TodoProvider({ children }: TodoProviderProps) {
   const [state, dispatch] = useReducer(todoReducer, initialTodos);
+  const nextId = useRef(5);
+
   return (
     <TodoStateContext.Provider value={state}>
       <TodoDispatchContext.Provider value={dispatch}>
-        {children}
+        <TodoNextIdContext.Provider value={nextId}>
+          {children}
+        </TodoNextIdContext.Provider>
       </TodoDispatchContext.Provider>
     </TodoStateContext.Provider>
   );
 }
 
+// 이렇개 사용하면 조금 더 사용성이 편합니다. 하지만, 취향에 따라 useContext 를 컴포넌트에서 바로 사용해도 상관은 없습니다.
+
 export function useTodoState() {
-  return useContext(TodoStateContext);
+  const context = useContext(TodoStateContext);
+  if (!context) {
+    throw new Error("Cannot find TodoProvider");
+  }
+  return context;
 }
 
 export function useTodoDispatch() {
-  return useContext(TodoDispatchContext);
+  const context = useContext(TodoDispatchContext);
+  if (!context) {
+    throw new Error("Cannot find TodoProvider");
+  }
+  return context;
+}
+
+export function useTodoNextId() {
+  const context = useContext(TodoNextIdContext);
+  if (!context) {
+    throw new Error("Cannot find TodoProvider");
+  }
+  return context;
 }
