@@ -19,7 +19,7 @@ const TodoTemplateBlock = styled.div`
 `;
 
 interface TodoTemplateProps {
-  children: string;
+  children: JSX.Element[];
 }
 
 function TodoTemplate({ children }: TodoTemplateProps) {
